@@ -23,9 +23,12 @@ import freightRateRoute from "./routes/freightRateRoute.js";
 import wheelseyePricingRoute from "./routes/wheelseyePricingRoute.js";
 // ODA routes
 import odaRoute from "./routes/odaRoute.js";
-
 // ✅ NEW: Invoice charges routes (import at top)
 import invoiceChargesRoutes from './routes/invoiceChargesRoutes.js';
+
+// Dev-stub routes (ESM imports)
+import dashboardRoutes from "./routes/dashboard.js";
+import userRoutes from "./routes/users.js";
 
 dotenv.config({ path: './config.env' });
 
@@ -201,6 +204,10 @@ app.use("/api/vendor", vendorRoute);
 app.use("/api/freight-rate", freightRateRoute);
 app.use("/api/wheelseye", wheelseyePricingRoute);
 app.use("/api/oda", odaRoute);
+
+// <-- DEV STUBS: add profile + dashboard endpoints (ensure these files exist)
+app.use("/api/users", userRoutes);
+app.use("/api/dashboard", dashboardRoutes);
 
 // ✅ NEW: Register invoice charges routes AFTER app is created
 app.use('/api/transporters', invoiceChargesRoutes);

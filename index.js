@@ -76,7 +76,7 @@ app.use(morgan(":date[iso] :id :method :url :status :res[content-length] - :resp
 
 // ────────────────────────────── CORS (with logs) ─────────────────────────────
 const STATIC_ALLOWED = [
-  "https://freightcomparefrontendnew.netlify.app/",
+  "https://freightcomparefrontendnew.netlify.app",
   "http://localhost:3000",
   "http://localhost:5173",
   "https://tester-frontend-34h73mybs-testforus12-cybers-projects.vercel.app",

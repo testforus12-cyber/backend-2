@@ -1,27 +1,42 @@
-// routes/users.js
-import express from "express";
+// routes/users.js 
+import express from 'express';
+import { protect } from '../middleware/authMiddleware.js';
+
 const router = express.Router();
 
-// Dev route: GET /api/users/me
-router.get("/me", (_req, res) => {
-  res.json({
-    _id: "user_123",
-    firstName: "Uttam",
-    lastName: "Goyal",
-    name: "Uttam Goyal",
-    email: "forus@gmail.com",
-    phone: 6548974646,
-    companyName: "Forus Electric",
-    gstNumber: "FEWBFIE2HFBEO",
-    address: "B313 Okhla Phase 1",
-    city: "Delhi",
-    state: "Delhi",
-    pincode: 110020,
-    pickupAddresses: [],
-    preferredVendors: [],
-    // createdAt as ISO string
-    createdAt: "2025-07-03T09:13:39.689Z"
-  });
+/**
+ * GET /api/users/me
+ * Return the currently authenticated customer's data.
+ */
+router.get('/me', protect, async (req, res) => {
+  try {
+    const user = req.user || req.customer; // set in protect()
+
+    if (!user) {
+      return res.status(401).json({
+        success: false,
+        message: 'Not authorized',
+      });
+    }
+
+    const safeUser = user.toObject ? user.toObject() : user;
+
+    // strip sensitive stuff
+    delete safeUser.password;
+    delete safeUser.__v;
+
+    // NOTE: createdAt / updatedAt (timestamps) are kept as-is
+    return res.json({
+      success: true,
+      data: safeUser,
+    });
+  } catch (err) {
+    console.error('Error in /api/users/me:', err);
+    return res.status(500).json({
+      success: false,
+      message: 'Server error',
+    });
+  }
 });
 
 export default router;

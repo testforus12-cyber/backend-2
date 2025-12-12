@@ -58,6 +58,13 @@ const temporaryTransporterModel = new mongoose.Schema(
     selectedZones: [{
       type: String,
     }],
+    // Zone config: compact format { N1: ["201301","201302"], N2: ["110001"] }
+    // Maps zone code to array of pincodes assigned to that zone by user
+    zoneConfig: {
+      type: Map,
+      of: [String],
+      default: {},
+    },
     prices: 
       {
         priceRate: {

@@ -19,7 +19,8 @@ import {
   updateZoneMatrix,
   deleteZoneMatrix,
   saveWizardData,
-  getWizardData
+  getWizardData,
+  searchTemporaryTransporters
 } from '../controllers/transportController.js';
 
 import {
@@ -89,4 +90,5 @@ router.delete('/zone-matrix/:vendorId', protect, deleteZoneMatrix);
 router.post('/wizard-data', protect, saveWizardData);
 router.get('/wizard-data', protect, getWizardData);
 
+router.get('/search-transporters', protect, searchTemporaryTransporters);
 export default router;
